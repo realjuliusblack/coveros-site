@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoverOS — The AI Staffing Operating System</title>
+<meta name="description" content="CoverOS is the AI staffing operating system. Install AI agents to run intake, matching, credentialing, outreach, and scheduling for your staffing agency. Dental, locums, APP, nursing, allied health. Founding Tenant program open: 10 spots.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --graphite: #0B1220;
+    --slate: #2B3A4A;
+    --slate-soft: #3A4A5D;
+    --brass: #B8874A;
+    --brass-hover: #A0753D;
+    --brass-soft: rgba(184, 135, 74, 0.12);
+    --green: #1F7A5A;
+    --green-soft: rgba(31, 122, 90, 0.15);
+    --bone: #F5F1EA;
+    --bone-hover: #EEE8DC;
+    --stone: #8A8A86;
+    --stone-light: #B8B5AE;
+    --char: #1A1F2A;
+    --border: #E5DFD4;
+    --border-dark: rgba(245, 241, 234, 0.12);
+    --danger: #A63D2E;
+
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Inter Tight', 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+
+    --max: 1280px;
+    --narrow: 880px;
+    --pad: 32px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--char);
+    background: var(--bone);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img, svg { display: block; max-width: 100%; }
+
+  ::selection { background: var(--brass); color: var(--graphite); }
+
+  /* Type */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--graphite);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  h1 { font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; }
+  h2 { font-size: 40px; line-height: 1.1; letter-spacing: -0.015em; }
+  h3 { font-size: 22px; line-height: 1.25; font-weight: 500; }
+  h4 { font-size: 17px; line-height: 1.3; font-weight: 600; letter-spacing: 0; }
+
+  .lead { font-size: 19px; line-height: 1.55; color: var(--char); }
+  .mono { font-family: var(--font-mono); font-feature-settings: "tnum"; }
+  .muted { color: var(--stone); }
+
+  /* Layout */
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+  .narrow { max-width: var(--narrow); margin: 0 auto; padding: 0 var(--pad); }
+
+  section { padding: 120px 0; }
+
+  /* Nav */
+  nav.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245, 241, 234, 0.92);
+    backdrop-filter: saturate(1.5) blur(10px);
+    -webkit-backdrop-filter: saturate(1.5) blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  nav.topnav.scrolled { border-bottom-color: var(--border); }
+  nav.topnav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--graphite);
+    letter-spacing: -0.02em;
+  }
+  .logo .os { color: var(--graphite); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 15px; font-weight: 500; color: var(--char); transition: color 0.15s; }
+  .nav-links a:hover { color: var(--brass); }
+  .nav-cta { display: flex; align-items: center; gap: 16px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px;
+    height: 48px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    letter-spacing: -0.005em;
+  }
+  .btn-primary { background: var(--brass); color: var(--graphite); border-color: var(--brass); }
+  .btn-primary:hover { background: var(--brass-hover); border-color: var(--brass-hover); }
+  .btn-secondary { background: transparent; color: var(--graphite); border-color: var(--graphite); }
+  .btn-secondary:hover { background: var(--graphite); color: var(--bone); }
+  .btn-ghost-light { background: transparent; color: var(--bone); border-color: var(--bone); }
+  .btn-ghost-light:hover { background: var(--bone); color: var(--graphite); }
+  .btn-sm { height: 40px; padding: 0 16px; font-size: 14px; }
+
+  /* Hero */
+  .hero {
+    background: var(--graphite);
+    color: var(--bone);
+    padding: 100px 0 120px;
+    border-bottom: 1px solid var(--border-dark);
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .hero h1 { color: var(--bone); font-size: 64px; letter-spacing: -0.025em; margin-top: 20px; max-width: 600px; }
+  .hero .lead { color: var(--stone-light); font-size: 19px; max-width: 520px; margin-top: 28px; }
+  .hero-cta { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--stone-light);
+  }
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 4px var(--green-soft);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  /* Product mock */
+  .product-mock {
+    background: var(--slate);
+    border-radius: 12px;
+    border: 1px solid var(--slate-soft);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    transform: perspective(1000px) rotateY(-2deg) rotateX(1deg);
+  }
+  .mock-bar {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 8px;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--slate-soft);
+  }
+  .mock-dots { display: flex; gap: 6px; }
+  .mock-dots span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+  }
+  .mock-url {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--stone);
+  }
+  .mock-body { padding: 24px; }
+  .mock-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .mock-title { font-family: var(--font-display); font-size: 18px; color: var(--bone); font-weight: 500; }
+  .mock-counter {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--stone-light);
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: rgba(31, 122, 90, 0.2);
+    border: 1px solid rgba(31, 122, 90, 0.3);
+    border-radius: 100px;
+  }
+  .mock-counter .live-dot { width: 6px; height: 6px; box-shadow: none; }
+  .mock-table { width: 100%; }
+  .mock-row {
+    display: grid;
+    grid-template-columns: 1fr 110px 80px 90px;
+    gap: 16px;
+    padding: 14px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .mock-row:hover { background: rgba(255,255,255,0.03); }
+  .mock-row + .mock-row { border-top: 1px solid rgba(255,255,255,0.05); }
+  .mock-row .shift { color: var(--bone); font-weight: 500; }
+  .mock-row .shift-meta { font-family: var(--font-mono); font-size: 11px; color: var(--stone); margin-top: 2px; }
+  .mock-row .rate { font-family: var(--font-mono); color: var(--bone); font-size: 13px; }
+  .mock-row .time { font-family: var(--font-mono); color: var(--stone-light); font-size: 11px; }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .status-filled {
+    background: rgba(31, 122, 90, 0.18);
+    color: #6FC7A3;
+  }
+  .status-matching {
+    background: rgba(184, 135, 74, 0.18);
+    color: var(--brass);
+  }
+  .status-new {
+    background: rgba(200, 200, 200, 0.1);
+    color: var(--stone-light);
+  }
+
+  /* One-liner strip */
+  .strip {
+    background: var(--bone-hover);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 0;
+    text-align: center;
+  }
+  .strip p { font-size: 20px; line-height: 1.5; color: var(--char); max-width: 780px; margin: 0 auto; }
+  .strip strong { color: var(--graphite); font-weight: 600; }
+
+  /* Meet the team */
+  .agents-intro { text-align: center; max-width: 680px; margin: 0 auto 72px; }
+  .agents-intro .eyebrow { margin-bottom: 16px; display: block; }
+  .agents-intro h2 { margin-bottom: 20px; }
+  .agents-intro p { font-size: 18px; color: var(--stone); }
+
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .agent-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .agent-card:hover {
+    border-color: var(--brass);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(11, 18, 32, 0.06);
+  }
+  .agent-icon {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--brass-soft);
+    color: var(--brass);
+    border-radius: 10px;
+  }
+  .agent-role {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .agent-card h3 { font-size: 20px; }
+  .agent-card p { color: var(--stone); font-size: 15px; line-height: 1.55; }
+  .agent-replaces {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--char);
+  }
+  .agent-replaces strong { color: var(--graphite); font-weight: 600; }
+
+  /* Tiers / Pricing */
+  .tiers {
+    background: var(--graphite);
+    color: var(--bone);
+  }
+  .tiers h2 { color: var(--bone); }
+  .tiers-intro { text-align: center; max-width: 680px; margin: 0 auto 72px; }
+  .tiers-intro .eyebrow { display: block; margin-bottom: 16px; }
+  .tiers-intro p { font-size: 18px; color: var(--stone-light); margin-top: 20px; }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .tier {
+    background: var(--slate);
+    border: 1px solid var(--slate-soft);
+    border-radius: 12px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .tier.featured {
+    background: linear-gradient(180deg, #32425A 0%, #2B3A4A 100%);
+    border: 1.5px solid var(--brass);
+    position: relative;
+  }
+  .tier.featured::before {
+    content: "FOUNDING RATE";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--brass);
+    color: var(--graphite);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+  }
+  .tier-name {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-light);
+  }
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .tier-price .num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--bone);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .tier-price .per { color: var(--stone-light); font-size: 15px; }
+  .tier-desc { color: var(--stone-light); font-size: 15px; line-height: 1.5; }
+  .tier ul { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 1px solid var(--slate-soft); }
+  .tier li {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--bone);
+    line-height: 1.5;
+  }
+  .tier li svg { flex-shrink: 0; color: var(--brass); margin-top: 3px; }
+  .tier .btn { margin-top: 12px; width: 100%; }
+
+  .tiers-footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--stone-light);
+    line-height: 1.6;
+  }
+
+  /* Founding Tenant */
+  .founding {
+    background: var(--bone);
+  }
+  .founding-intro { text-align: center; max-width: 720px; margin: 0 auto 80px; }
+  .founding-intro .eyebrow { display: block; margin-bottom: 16px; }
+  .founding-intro h2 { margin-bottom: 20px; }
+  .founding-intro p { font-size: 18px; color: var(--stone); }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 0 auto 60px;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 24px;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .timeline-step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 12px;
+  }
+  .timeline-dot {
+    width: 48px; height: 48px;
+    background: var(--bone);
+    border: 2px solid var(--graphite);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--graphite);
+    font-weight: 500;
+    margin: 0 auto 20px;
+  }
+  .timeline-step.active .timeline-dot { background: var(--brass); border-color: var(--brass); color: var(--graphite); }
+  .timeline-step h4 { font-family: var(--font-display); font-size: 16px; margin-bottom: 6px; color: var(--graphite); font-weight: 500; }
+  .timeline-step p { font-size: 13px; color: var(--stone); line-height: 1.5; }
+
+  .founding-terms {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .founding-terms h3 { margin-bottom: 24px; font-size: 22px; }
+  .founding-terms ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .founding-terms li {
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .founding-terms li svg { flex-shrink: 0; color: var(--brass); margin-top: 5px; }
+  .founding-terms li strong { color: var(--graphite); font-weight: 600; }
+
+  .spots-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--brass-soft);
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 32px;
+  }
+
+  /* Case study */
+  .casestudy {
+    background: var(--graphite);
+    color: var(--bone);
+    text-align: center;
+  }
+  .casestudy blockquote {
+    max-width: 880px;
+    margin: 0 auto;
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--bone);
+  }
+  .casestudy blockquote::before {
+    content: '"';
+    display: block;
+    font-size: 80px;
+    color: var(--brass);
+    line-height: 0.5;
+    margin-bottom: 24px;
+    font-family: var(--font-display);
+  }
+  .casestudy .attribution {
+    display: block;
+    margin-top: 32px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--stone-light);
+    letter-spacing: 0.02em;
+  }
+  .casestudy .note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--stone);
+    font-style: italic;
+  }
+
+  /* FAQ */
+  .faq-intro { text-align: center; max-width: 680px; margin: 0 auto 60px; }
+  .faq-intro .eyebrow { display: block; margin-bottom: 16px; }
+
+  .faq-list { max-width: 820px; margin: 0 auto; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+  .faq-q {
+    padding: 24px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .faq-q:hover { color: var(--brass); }
+  .faq-q h4 { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: inherit; }
+  .faq-icon {
+    width: 28px; height: 28px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--brass); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.2s;
+    color: var(--stone);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .faq-item.open .faq-a {
+    max-height: 500px;
+    padding-bottom: 28px;
+  }
+
+  /* Founder strip */
+  .founder-strip {
+    background: var(--bone);
+    border-top: 1px solid var(--border);
+    padding: 80px 0;
+  }
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .founder-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--slate), var(--graphite));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bone);
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 500;
+    border: 2px solid var(--graphite);
+  }
+  .founder-content .eyebrow { display: block; margin-bottom: 12px; }
+  .founder-content h3 { font-size: 24px; margin-bottom: 12px; }
+  .founder-content p { color: var(--char); font-size: 16px; line-height: 1.65; }
+  .founder-content p + p { margin-top: 14px; }
+
+  /* Final CTA */
+  .final-cta {
+    background: var(--graphite);
+    color: var(--bone);
+    text-align: center;
+    padding: 140px 0;
+  }
+  .final-cta .eyebrow { display: block; margin-bottom: 24px; }
+  .final-cta h2 {
+    color: var(--bone);
+    font-size: 56px;
+    line-height: 1.1;
+    max-width: 820px;
+    margin: 0 auto 24px;
+    letter-spacing: -0.025em;
+  }
+  .final-cta p {
+    font-size: 18px;
+    color: var(--stone-light);
+    max-width: 640px;
+    margin: 0 auto 40px;
+  }
+  .final-cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* Footer */
+  footer {
+    background: var(--graphite);
+    color: var(--stone-light);
+    padding: 64px 0 40px;
+    border-top: 1px solid var(--border-dark);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .logo { color: var(--bone); font-size: 22px; }
+  .footer-brand p { font-size: 14px; margin-top: 16px; max-width: 300px; line-height: 1.5; }
+  .footer-col h5 {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: var(--stone-light); transition: color 0.15s; }
+  .footer-col a:hover { color: var(--bone); }
+  .footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid var(--border-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--stone);
+  }
+
+  /* Mobile nav */
+  .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .mobile-toggle svg { color: var(--graphite); }
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bone);
+    z-index: 99;
+    padding: 40px var(--pad);
+    flex-direction: column;
+    gap: 20px;
+  }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer a { font-size: 22px; color: var(--graphite); padding: 12px 0; border-bottom: 1px solid var(--border); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+    .hero h1 { font-size: 48px; }
+    .agents-grid { grid-template-columns: repeat(2, 1fr); }
+    .tiers-grid { grid-template-columns: 1fr; gap: 20px; }
+    .footer-grid { grid-template-columns: 2fr 1fr 1fr; gap: 32px; }
+    .footer-col:nth-child(5) { grid-column: span 3; }
+  }
+
+  @media (max-width: 768px) {
+    :root { --pad: 20px; }
+    section { padding: 72px 0; }
+    .hero { padding: 56px 0 80px; }
+    .hero h1 { font-size: 36px; }
+    .hero .lead { font-size: 17px; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    .strip p { font-size: 16px; }
+    .nav-links { display: none; }
+    .nav-cta .btn { display: none; }
+    .mobile-toggle { display: block; }
+    .agents-grid { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .timeline::before { display: none; }
+    .founder-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; justify-items: center; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand, .footer-col:nth-child(5) { grid-column: span 2; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .final-cta h2 { font-size: 36px; }
+    .casestudy blockquote { font-size: 22px; }
+    .product-mock { transform: none; }
+    .mock-row { grid-template-columns: 1fr 80px; }
+    .mock-row .rate, .mock-row .time { display: none; }
+    .tiers-grid { gap: 16px; }
+    .founding-terms { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav" id="topnav">
+  <div class="container">
+    <a href="#" class="logo">Cover<span class="os">OS</span></a>
+    <div class="nav-links">
+      <a href="#agents">Agents</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#founding">Founding</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#final" class="btn btn-primary btn-sm">Install your first AI agent</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="#agents">Agents</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#founding">Founding</a>
+    <a href="#faq">FAQ</a>
+    <a href="#final" class="btn btn-primary" style="margin-top: 20px;">Install your first AI agent</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">The AI Staffing Operating System</div>
+        <h1>Install AI agents for your staffing agency.</h1>
+        <p class="lead">CoverOS is where staffing agencies install, manage, and deploy AI teams across intake, credentialing, matching, outreach, and scheduling. Dental, locums, APPs, nursing, allied health. One OS. Every vertical.</p>
+        <div class="hero-cta">
+          <a href="#final" class="btn btn-primary">Install your first AI agent</a>
+          <a href="#agents" class="btn btn-ghost-light">Meet the team</a>
+        </div>
+        <div class="hero-meta">
+          <span class="live-dot"></span>
+          <span>3 of 10 Founding Tenant spots filled. 7 remaining.</span>
+        </div>
+      </div>
+      <div>
+        <div class="product-mock">
+          <div class="mock-bar">
+            <div class="mock-dots"><span></span><span></span><span></span></div>
+            <div class="mock-url">app.coveros.com / live board</div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-header">
+              <div class="mock-title">Live Shift Board</div>
+              <div class="mock-counter"><span class="live-dot"></span> 4 active</div>
+            </div>
+            <div class="mock-table">
+              <div class="mock-row">
+                <div>
+                  <div class="shift">RDH · Smile Dental Austin</div>
+                  <div class="shift-meta">Tue 8:00 — 5:00</div>
+                </div>
+                <div><span class="status-pill status-filled">Filled</span></div>
+                <div class="rate">$52/hr</div>
+                <div class="time">11:02 PM</div>
+              </div>
+              <div class="mock-row">
+                <div>
+                  <div class="shift">MD · Rural ER Nebraska</div>
+                  <div class="shift-meta">Sat-Mon 36h · BC-EM</div>
+                </div>
+                <div><span class="status-pill status-matching">Matching</span></div>
+                <div class="rate">$280/hr</div>
+                <div class="time">10:41 PM</div>
+              </div>
+              <div class="mock-row">
+                <div>
+                  <div class="shift">RDH · Austin Family Dental</div>
+                  <div class="shift-meta">Wed 7:30 — 4:30</div>
+                </div>
+                <div><span class="status-pill status-filled">Filled</span></div>
+                <div class="rate">$48/hr</div>
+                <div class="time">09:22 PM</div>
+              </div>
+              <div class="mock-row">
+                <div>
+                  <div class="shift">NP · Midtown Urgent Care</div>
+                  <div class="shift-meta">Fri 12h · FNP-C</div>
+                </div>
+                <div><span class="status-pill status-new">New</span></div>
+                <div class="rate">$95/hr</div>
+                <div class="time">10:47 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="narrow">
+    <p>Every staffing agency runs the same operation under different names. <strong>CoverOS runs it for you, across every vertical, 24/7.</strong></p>
+  </div>
+</div>
+
+<!-- AGENTS -->
+<section id="agents">
+  <div class="container">
+    <div class="agents-intro">
+      <span class="eyebrow">Meet the team</span>
+      <h2>Your AI staffing team. Three layers. Install who you need.</h2>
+      <p>Each client gets an <strong>Operator</strong> custom-configured to your firm, a set of <strong>Managers</strong> for each domain, and the <strong>Tenant Brain</strong> that remembers everything. You name the Operator. You set the rules. The team runs your firm.</p>
+    </div>
+    <div class="agents-grid">
+      <!-- The Operator -->
+      <div class="agent-card">
+        <div class="agent-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="agent-role">Your Orchestrator &middot; Customizable</div>
+        <h3>The Operator</h3>
+        <p>Your firm's top-level orchestrator. You name it, you configure it. Applies your voice, your objection patterns, your escalation rules. Directs the Manager team and knows when to involve a human. LPU named theirs "Top Bot." You name yours whatever fits your firm.</p>
+        <div class="agent-replaces"><strong>Replaces:</strong> your ops manager tying the whole operation together.</div>
+      </div>
+      <!-- Recruitment Manager -->
+      <div class="agent-card">
+        <div class="agent-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="agent-role">Sourcing &amp; Matching</div>
+        <h3>Recruitment Manager</h3>
+        <p>Queries your roster and public sources, ranks candidates by distance, availability, rate history, and past placements. Runs parallel outreach until a fill lands.</p>
+        <div class="agent-replaces"><strong>Replaces:</strong> 1 to 2 recruiters doing phone-tag on roster.</div>
+      </div>
+      <!-- Credentialing Manager -->
+      <div class="agent-card">
+        <div class="agent-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="agent-role">Compliance</div>
+        <h3>Credentialing Manager</h3>
+        <p>Verifies state board licenses, DEA, NPI, malpractice, and background against source-of-truth APIs. Flags expirations 90 days out. Blocks bad placements before they ship.</p>
+        <div class="agent-replaces"><strong>Replaces:</strong> a credentialing coordinator at $55 to $75k / year.</div>
+      </div>
+      <!-- Scheduling Manager -->
+      <div class="agent-card">
+        <div class="agent-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="agent-role">Logistics</div>
+        <h3>Scheduling Manager</h3>
+        <p>Owns the calendar. Books shifts, coordinates travel, handles cancellations, notifies practices when candidates are 15 minutes out.</p>
+        <div class="agent-replaces"><strong>Replaces:</strong> a dedicated scheduler at $45 to $60k / year.</div>
+      </div>
+      <!-- Brain -->
+      <div class="agent-card">
+        <div class="agent-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2a2.5 2.5 0 0 0-2.5 2.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"/></svg>
+        </div>
+        <div class="agent-role">Memory</div>
+        <h3>Tenant Brain</h3>
+        <p>Your private firm memory. Learns your voice, your objection patterns, your candidate history. Never trains on any other tenant. Never leaves your instance.</p>
+        <div class="agent-replaces"><strong>Replaces:</strong> the institutional knowledge that walks out when a recruiter quits.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="tiers" id="pricing">
+  <div class="container">
+    <div class="tiers-intro">
+      <span class="eyebrow">How installation works</span>
+      <h2>Install what you need. Add agents as you grow.</h2>
+      <p>Three tiers. All include the tenant brain. All support every staffing vertical.</p>
+    </div>
+    <div class="tiers-grid">
+      <!-- Starter -->
+      <div class="tier">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price">
+          <span class="num">$2,997</span>
+          <span class="per">/month</span>
+        </div>
+        <div class="tier-desc">For agencies with one recruiter and fewer than 5 shifts per day.</div>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Recruitment Manager + Tenant Brain</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 150 requests / month</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Private tenant brain</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Email support, 1 business day</li>
+        </ul>
+      </div>
+      <!-- Growth -->
+      <div class="tier featured">
+        <div class="tier-name">Growth</div>
+        <div class="tier-price">
+          <span class="num">$4,997</span>
+          <span class="per">/month</span>
+        </div>
+        <div class="tier-desc">For agencies with 2 to 5 recruiters and 5 to 30 shifts per day.</div>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom Operator + Managers (Recruitment, Credentialing, Scheduling)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited requests</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Private tenant brain</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Direct Slack channel with founder</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 36-month price lock</li>
+        </ul>
+        <a href="#final" class="btn btn-primary">Install Growth</a>
+      </div>
+      <!-- Full Platform -->
+      <div class="tier">
+        <div class="tier-name">Full Platform</div>
+        <div class="tier-price">
+          <span class="num">$9,997</span>
+          <span class="per">/month</span>
+        </div>
+        <div class="tier-desc">For agencies with full ops teams and 30+ shifts per day across verticals.</div>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in Growth + advanced Operator workflows</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Multi-vertical support</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom agent workflows</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 4-hour SLA</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Quarterly ops review</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tiers-footer">
+      Founding Tenant pricing is locked for 36 months. Standard rate after the 10 spots fill: <span style="color: var(--bone);">$5,997 / month</span> with a $2,000 setup fee.
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING -->
+<section class="founding" id="founding">
+  <div class="container">
+    <div class="founding-intro">
+      <span class="eyebrow">Founding Tenant program</span>
+      <h2>10 spots. 30-day pilot. Founding Rate locked 36 months.</h2>
+      <p>Run the full platform for 30 days at no cost. Activate on day 28. Lock a rate that won't exist in 2027.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-step active">
+        <div class="timeline-dot">D0</div>
+        <h4>Sign</h4>
+        <p>Stripe authorization holds your spot. No charge.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">D14</div>
+        <h4>Install</h4>
+        <p>We migrate your data, connect your stack, deploy your team.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">D28</div>
+        <h4>Decide</h4>
+        <p>Reply CONVERT to activate. No reply, no charge, no awkward call.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">D31</div>
+        <h4>Activate</h4>
+        <p>$4,997 /mo begins. Locked 36 months. Cancel anytime.</p>
+      </div>
+    </div>
+    <div class="founding-terms">
+      <h3>What you get as a Founding Tenant</h3>
+      <ul>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Full Growth tier</strong> during the 30-day pilot. Nothing held back.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Founding Rate of $4,997 / month</strong>, price-locked for 36 months. Standard post-program rate is $5,997 + $2,000 setup.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Direct line to the founder.</strong> Slack channel, cell number, real responses within 4 business hours.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Opt-IN activation on day 28.</strong> Not opt-out. No surprise charges. No dark-pattern trial conversions.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Cancel anytime after activation.</strong> Monthly, not annual. No commitment.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Your data stays yours.</strong> Never trains any other tenant's model. Export anytime.</span></li>
+      </ul>
+      <div class="spots-counter">
+        <span class="live-dot"></span>
+        <span>3 of 10 spots filled &middot; 7 remaining</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="casestudy">
+  <div class="container">
+    <blockquote>
+      Credentialing cycle time dropped from 18 days to 6. Recruiter outbound capacity up 3.2x without hiring. We shifted 4 FTE out of coordination into placement.
+      <span class="attribution">Director of Operations &middot; US locums physician staffing firm &middot; $14M ARR &middot; 40 monthly placements</span>
+      <span class="note">Name withheld at client request during Founding Tenant program.</span>
+    </blockquote>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-intro">
+      <span class="eyebrow">FAQ</span>
+      <h2>What every buyer asks on the call.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>Is this real, or is this a one-person shop?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">CoverOS is built and operated by Julius Black. Solo, for now. That is the point of the Founding Tenant program: the first 10 customers build the company with the founder, and you get direct access to the person writing the code. Black Label Solutions, the parent entity, converts to a Delaware LLC in Q2 2026.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>What happens if I don't like it?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">You walk. On day 28 of your pilot, we ask if you want to continue. If you say no, or say nothing, there is no charge and the Stripe authorization expires. The pilot is 30 days, not 30 days with a surprise on day 31. Post-activation, you can cancel anytime.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>What does the AI do vs. what does my team still do?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Agents do: intake, outbound, qualification, credentialing checks, packet assembly, scheduling. Your team does: final approvals, client relationships, rate negotiation, anything requiring judgment. We do not replace recruiters. We remove the 4 hours a day they spend typing.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>What about HIPAA and data privacy?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">CoverOS signs a BAA before pilot data touches production. Data lives in isolated tenant databases, encrypted at rest and in transit. Your tenant brain is private and never trains any shared model. DPA available on request. SOC 2 Type I audit engaged Q3 2026.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>We already use Bullhorn / GHL / Cloud Dentistry. Do we rip it out?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">No. CoverOS runs alongside your existing stack and integrates bidirectionally with Bullhorn, GoHighLevel, HubSpot, and Salesforce. Your team keeps their tools. CoverOS handles the agentic work those tools don't do.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>Why only 10 Founding Tenants?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">10 is the number the team can personally onboard, monitor, and fix without dropping quality. At 25, we would be shipping a degraded experience. At 100, we would be shipping someone else's company. The cap is a staffing limit, not a marketing trick.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h4>What if CoverOS breaks mid-placement?</h4>
+          <div class="faq-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Every agent decision is logged and reversible. Your recruiter catches anything wrong before it reaches a practice or facility. Founding Tenants have founder cell access. If a bug costs you a placement, we credit a month of Growth once paid billing begins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder-strip">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-avatar">JB</div>
+      <div class="founder-content">
+        <span class="eyebrow">From the founder</span>
+        <h3>Small company. Serious product.</h3>
+        <p>CoverOS is built and operated by Julius Black, a solo founder operating out of Black Label Solutions. Every line of code, every agent prompt, every customer conversation in the Founding cohort runs through one person.</p>
+        <p>That is a feature of the first 10 installs, not a bug. If you have a problem, you reach the person who can fix it. If you have a feature request, it ships before the 100 customers who come after you. If you have a concern, it is heard and acted on the same day.</p>
+        <p>This changes as the company grows. When it does, the Founding Tenants keep the rate, the access, and the preference. That is the deal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="final">
+  <div class="container">
+    <span class="eyebrow">Next step</span>
+    <h2>Install your AI team. Start with one call.</h2>
+    <p>20 minutes with Julius. No deck. No pitch. Bring your last 5 unfilled shifts or coverage requests. We will walk through whether CoverOS handles them.</p>
+    <div class="final-cta-buttons">
+      <a href="mailto:julius@blacklabelsolutions.net" class="btn btn-primary">Book the call</a>
+      <a href="mailto:julius@blacklabelsolutions.net" class="btn btn-ghost-light">Email julius@</a>
+    </div>
+    <p style="font-size: 13px; color: var(--stone); margin-top: 40px;">3 of 10 Founding Tenant spots filled. 7 remaining.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">Cover<span class="os">OS</span></a>
+        <p>The AI staffing operating system. A product of Black Label Solutions.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#agents">Agents</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#founding">Founding Tenant</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#founding">Founding</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">DPA</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:julius@blacklabelsolutions.net">julius@blacklabelsolutions.net</a></li>
+          <li><a href="#final">Book a call</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Black Label Solutions</div>
+      <div>CoverOS &middot; Built in the US &middot; Operating with real staffing firms today</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // Mobile drawer
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  mobileToggle.addEventListener('click', () => {
+    mobileDrawer.classList.toggle('open');
+  });
+  mobileDrawer.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') mobileDrawer.classList.remove('open');
+  });
+</script>
+
+</body>
+</html>
